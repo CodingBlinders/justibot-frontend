@@ -5,8 +5,11 @@ import LoginField from "../components/loginField";
 const Login = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
-      <div className="col-span-7 lg:col-span-7 flex justify-center items-center bg-[#EFEFEF]">
-        <div className="w-full h-full">
+      <div
+        className="col-span-7 lg:col-span-7 flex justify-center items-center bg-cover bg-center"
+        style={{ backgroundImage: 'url("/images/login-1.png")' }}
+      >
+        {/* <div className="w-full h-full">
           <Image
             src="/images/login-1.png"
             alt="Yashed"
@@ -15,7 +18,7 @@ const Login = () => {
             layout="responsive"
             objectFit="cover"
           />
-        </div>
+        </div> */}
       </div>
       <div className="col-span-3 lg:col-span-5 flex flex-col justify-center items-center bg-[#131211]">
         <LoginField />
