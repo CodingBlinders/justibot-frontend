@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import ThirdPartySignup from "./3rdpartySignup";
+import Image from "next/image";
 
 const LoginField = () => {
   return (
@@ -55,7 +56,7 @@ const LoginField = () => {
         <div className="mb-6 flex justify-between gap-10 ">
           <ThirdPartySignup />
         </div>
-        <div className="w-full text-gray-700 font-medium py-2 text-white text-xs">
+        <div className="w-full text-gray-700 font-medium py-2 text-xs">
           Don't have an account?{" "}
           <Link
             href="/signup"

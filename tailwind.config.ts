@@ -13,8 +13,12 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      scrollbar: ['rounded'],
     },
   },
-  plugins: [],
+  plugins: [
+   
+    require('tailwind-scrollbar')({ nocompatible: true }),
+  ],
 };
 export default config;
