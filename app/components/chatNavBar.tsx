@@ -11,7 +11,7 @@ interface ChatNavBarProps {
 const ChatNavBar: React.FC<ChatNavBarProps> = ({ toggleSidebar }) => {
   return (
     <motion.div
-      initial={{ x: -250 }}
+      initial={{ x: -50 }}
       animate={{ x: 0 }}
       exit={{ x: -250 }}
       transition={{ type: "spring", stiffness: 70 }}
