@@ -26,32 +26,32 @@ const Chat = () => {
   };
 
   return (
-    <div className="grid grid-cols-12 overflow-hidden h-screen w-screen bg-[#131211]">
+    <div className="flex h-screen w-screen overflow-hidden bg-[#131211]">
       {isSidebarVisible && (
-        <div className="sm:col-span-0 lg:col-span-3 xl:col-span-2 md:col-span-3 p-4 justify-center items-center">
-          <ChatNavBar toggleSidebar={toggleSidebar} />{" "}
+        <div className="hidden md:block w-72 p-4 h-full">
+          <ChatNavBar toggleSidebar={toggleSidebar} />
         </div>
       )}
       <div
-        className={`col-span-12 ${
-          isSidebarVisible
-            ? "lg:col-span-9 xl:col-span-10 md:col-span-9"
-            : "col-span-12"
-        } p-4 justify-center items-center w-full`}
+        className={`flex-grow p-4 ${
+          isSidebarVisible ? "md:ml-4" : ""
+        } flex justify-center items-center`}
       >
-        <div className="m-1 rounded-[50px] bg-[#1F1D1C] border-2 border-white h-full">
-          <form className="relative h-full w-full flex justify-center">
-            <div className="w-52 h-auto m-20">
-              <Image
-                src="/images/justibot-logo-1.png"
-                alt="justibot-logo-1"
-                width={400}
-                height={400}
-                layout="responsive"
-                objectFit="cover"
-              />
+        <div className="m-1 w-full h-full rounded-[50px] bg-[#1F1D1C] border-2 border-white flex flex-col">
+          <form className="relative flex-grow flex flex-col justify-between">
+            <div className="flex justify-center items-center mt-4">
+              <div className="w-40 h-auto md:w-52">
+                <Image
+                  src="/images/justibot-logo-1.png"
+                  alt="justibot-logo-1"
+                  width={400}
+                  height={400}
+                  layout="responsive"
+                  objectFit="cover"
+                />
+              </div>
             </div>
-            <div className="px-4 absolute top-0 left-1/2 transform -translate-x-1/2 mt-4 w-full">
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-full px-4">
               {!isSidebarVisible && (
                 <button
                   onClick={toggleSidebar}
@@ -79,13 +79,13 @@ const Chat = () => {
                 </button>
               )}
             </div>
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 flex items-center justify-center w-full">
+            <div className="flex items-center justify-center mb-4 px-4 w-full">
               <textarea
                 id="message"
                 ref={textareaRef}
                 rows={1}
                 style={{ height: "40px" }} // Set default height here
-                className="mr-4 my-2 block w-2/4 max-h-40 p-2 border-gray-300 rounded-md shadow-sm focus:border-[#A36A32] focus:ring text-white bg-[#473F3B] focus:ring-indigo-200 focus:ring-opacity-50 text-md resize-none overflow-y-auto custom-scrollbar"
+                className="mr-4 my-2 block w-full md:w-2/4 sm:w-3/4 max-h-40 p-2 border-gray-300 rounded-md shadow-sm focus:border-[#A36A32] focus:ring text-white bg-[#473F3B] focus:ring-indigo-200 focus:ring-opacity-50 text-md resize-none overflow-y-auto custom-scrollbar"
                 placeholder="Message JustiBot.."
                 onInput={handleInput}
               />
