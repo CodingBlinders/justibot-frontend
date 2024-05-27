@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/chat/page.jsx", "app/components/3rdpartySignup.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/chat/page.tsx", "app/components/3rdpartySignup.tsx", "app/login/page.jsx", "app/components/signupField.jsx", "app/page.jsx"],
   "exclude": ["node_modules"]
 }
