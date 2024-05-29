@@ -6,6 +6,9 @@ import Image from "next/image";
 const Chat = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [isListening, setIsListening] = useState(false);
+  const [placeholder, setPlaceholder] = useState("Message JustiBot...");
+  const [micColor, setMicColor] = useState("#473F3B");
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (textareaRef.current) {
@@ -25,33 +28,40 @@ const Chat = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
+  const handleVoiceInputToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    setIsListening(!isListening);
+    setPlaceholder(isListening ? "Message JustiBot..." : "Listening...");
+    setMicColor(isListening ? "#473F3B" : "#A36A32");
+  };
+
   return (
-    <div className="grid grid-cols-12 overflow-hidden h-screen w-screen bg-[#131211]">
+    <div className="flex h-screen w-screen overflow-hidden bg-[#131211]">
       {isSidebarVisible && (
-        <div className="sm:col-span-0 lg:col-span-3 xl:col-span-2 md:col-span-3 p-4 justify-center items-center">
-          <ChatNavBar toggleSidebar={toggleSidebar} />{" "}
+        <div className="hidden md:block w-72 p-4 h-full">
+          <ChatNavBar toggleSidebar={toggleSidebar} />
         </div>
       )}
       <div
-        className={`col-span-12 ${
-          isSidebarVisible
-            ? "lg:col-span-9 xl:col-span-10 md:col-span-9"
-            : "col-span-12"
-        } p-4 justify-center items-center w-full`}
+        className={`flex-grow p-4 ${
+          isSidebarVisible ? "md:ml-4" : ""
+        } flex justify-center items-center`}
       >
-        <div className="m-1 rounded-[50px] bg-[#1F1D1C] border-2 border-white h-full">
-          <form className="relative h-full w-full flex justify-center">
-            <div className="w-52 h-auto m-20">
-              <Image
-                src="/images/justibot-logo-1.png"
-                alt="justibot-logo-1"
-                width={400}
-                height={400}
-                layout="responsive"
-                objectFit="cover"
-              />
+        <div className="m-1 w-full h-full rounded-[50px] bg-[#1F1D1C] border-2 border-white flex flex-col">
+          <form className="relative flex-grow flex flex-col justify-between">
+            <div className="flex justify-center items-center mt-4">
+              <div className="w-40 h-auto md:w-52">
+                <Image
+                  src="/images/justibot-logo-1.png"
+                  alt="justibot-logo-1"
+                  width={400}
+                  height={400}
+                  layout="responsive"
+                  objectFit="cover"
+                />
+              </div>
             </div>
-            <div className="px-4 absolute top-0 left-1/2 transform -translate-x-1/2 mt-4 w-full">
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-full px-4">
               {!isSidebarVisible && (
                 <button
                   onClick={toggleSidebar}
@@ -79,17 +89,39 @@ const Chat = () => {
                 </button>
               )}
             </div>
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 flex items-center justify-center w-full">
-              <textarea
-                id="message"
-                ref={textareaRef}
-                rows={1}
-                style={{ height: "40px" }} // Set default height here
-                className="mr-4 my-2 block w-2/4 max-h-40 p-2 border-gray-300 rounded-md shadow-sm focus:border-[#A36A32] focus:ring text-white bg-[#473F3B] focus:ring-indigo-200 focus:ring-opacity-50 text-md resize-none overflow-y-auto custom-scrollbar"
-                placeholder="Message JustiBot.."
-                onInput={handleInput}
-              />
-              <button className="flex items-center py-2 rounded-lg focus:outline-none focus:shadow-outline group">
+            <div className="flex items-center justify-center mb-4 px-4 w-full">
+              <div className="relative w-full md:w-2/4 sm:w-3/4 my-2">
+                <textarea
+                  id="message"
+                  ref={textareaRef}
+                  rows={1}
+                  style={{ height: "40px" }} // Set default height here
+                  className="mr-4 block w-full max-h-40 p-2 border-gray-300 rounded-md shadow-sm focus:border-[#A36A32] focus:ring text-white bg-[#473F3B] focus:ring-indigo-200 focus:ring-opacity-50 text-md resize-none overflow-y-auto custom-scrollbar"
+                  placeholder={placeholder}
+                  onInput={handleInput}
+                />
+                <button
+                  onClick={handleVoiceInputToggle}
+                  className="absolute right-5 top-0 bg-transparent border-none cursor-pointer focus:outline-none focus:shadow-outline"
+                  style={{ height: "100%", width: "25px" }}
+                  aria-label="Voice Input"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="40"
+                    height="40"
+                    viewBox="0 0 50 50"
+                    fill="none"
+                  >
+                    <circle cx="25" cy="25" r="22" fill={micColor} />
+                    <path
+                      d="M25 28.4286C23.9286 28.4286 23.0179 28.0536 22.2679 27.3036C21.5179 26.5536 21.1429 25.6429 21.1429 24.5714V16.8571C21.1429 15.7857 21.5179 14.875 22.2679 14.125C23.0179 13.375 23.9286 13 25 13C26.0714 13 26.9821 13.375 27.7321 14.125C28.4821 14.875 28.8571 15.7857 28.8571 16.8571V24.5714C28.8571 25.6429 28.4821 26.5536 27.7321 27.3036C26.9821 28.0536 26.0714 28.4286 25 28.4286ZM23.7143 37.4286V33.475C21.4857 33.175 19.6429 32.1786 18.1857 30.4857C16.7286 28.7929 16 26.8214 16 24.5714H18.5714C18.5714 26.35 19.1984 27.8663 20.4524 29.1203C21.7064 30.3743 23.2223 31.0009 25 31C26.7777 30.9991 28.294 30.3721 29.5489 29.119C30.8037 27.8659 31.4303 26.35 31.4286 24.5714H34C34 26.8214 33.2714 28.7929 31.8143 30.4857C30.3571 32.1786 28.5143 33.175 26.2857 33.475V37.4286H23.7143Z"
+                      fill="white"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <button className="flex items-center py-2 rounded-lg focus:outline-none focus:shadow-outline group ml-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="29"
