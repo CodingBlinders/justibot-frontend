@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import ChatNavBar from "../components/chatNavBar";
 import Image from "next/image";
+import InputChat from "../components/inputChat";
 
 const Chat = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -9,11 +10,24 @@ const Chat = () => {
   const [isListening, setIsListening] = useState(false);
   const [placeholder, setPlaceholder] = useState("Message JustiBot...");
   const [micColor, setMicColor] = useState("#473F3B");
+  const [messages, setMessages] = useState<string[]>([]);
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [isLogoVisible, setIsLogoVisible] = useState(true);
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCurrentMessage(e.target.value);
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (currentMessage.trim() !== "") {
+      setMessages((prevMessages) => [...prevMessages, currentMessage]);
+      setCurrentMessage("");
+      setIsLogoVisible(false);
     }
   };
 
@@ -22,14 +36,14 @@ const Chat = () => {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }, []);
+  }, [currentMessage]);
 
   const toggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
   const handleVoiceInputToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
     setIsListening(!isListening);
     setPlaceholder(isListening ? "Message JustiBot..." : "Listening...");
     setMicColor(isListening ? "#473F3B" : "#A36A32");
@@ -48,19 +62,25 @@ const Chat = () => {
         } flex justify-center items-center`}
       >
         <div className="m-1 w-full h-full rounded-[50px] bg-[#1F1D1C] border-2 border-white flex flex-col">
-          <form className="relative flex-grow flex flex-col justify-between">
-            <div className="flex justify-center items-center mt-4">
-              <div className="w-40 h-auto md:w-52">
-                <Image
-                  src="/images/justibot-logo-1.png"
-                  alt="justibot-logo-1"
-                  width={400}
-                  height={400}
-                  layout="responsive"
-                  objectFit="cover"
-                />
+          <form
+            className="relative flex-grow flex flex-col justify-between"
+            onSubmit={handleSubmit}
+          >
+            {isLogoVisible && (
+              <div className="flex justify-center items-center mt-4">
+                <div className="w-40 h-auto md:w-52">
+                  <Image
+                    src="/images/justibot-logo-1.png"
+                    alt="justibot-logo-1"
+                    width={400}
+                    height={400}
+                    layout="responsive"
+                    objectFit="cover"
+                  />
+                </div>
               </div>
-            </div>
+            )}
+
             <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-full px-4">
               {!isSidebarVisible && (
                 <button
@@ -81,7 +101,7 @@ const Chat = () => {
                       />
                     </g>
                     <defs>
-                      <clipPath id="clip0_27_174">
+                      <clipPath id="clip0_27_174)">
                         <rect width="40" height="40" fill="white" />
                       </clipPath>
                     </defs>
@@ -89,15 +109,23 @@ const Chat = () => {
                 </button>
               )}
             </div>
+            <div className="flex flex-col gap-2 w-full mt-20 h-96 flex-grow overflow-y-auto custom-scrollbar">
+              {messages.map((message, index) => (
+                <div key={index} className="w-full md:w-2/4 sm:w-3/4 mx-auto">
+                  <InputChat message={message} />
+                </div>
+              ))}
+            </div>
             <div className="flex items-center justify-center mb-4 px-4 w-full">
               <div className="relative w-full md:w-2/4 sm:w-3/4 my-2">
                 <textarea
                   id="message"
                   ref={textareaRef}
                   rows={1}
-                  style={{ height: "40px" }} // Set default height here
+                  style={{ height: "40px" }}
                   className="mr-4 block w-full max-h-40 p-2 border-gray-300 rounded-md shadow-sm focus:border-[#A36A32] focus:ring text-white bg-[#473F3B] focus:ring-indigo-200 focus:ring-opacity-50 text-md resize-none overflow-y-auto custom-scrollbar"
                   placeholder={placeholder}
+                  value={currentMessage}
                   onInput={handleInput}
                 />
                 <button
@@ -121,7 +149,10 @@ const Chat = () => {
                   </svg>
                 </button>
               </div>
-              <button className="flex items-center py-2 rounded-lg focus:outline-none focus:shadow-outline group ml-4">
+              <button
+                type="submit"
+                className="flex items-center py-2 rounded-lg focus:outline-none focus:shadow-outline group ml-4"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="29"
