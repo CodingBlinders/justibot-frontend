@@ -6,12 +6,7 @@ const InputChat = ({ message }: { message: string }) => {
     <div>
       <div className="flex flex-row py-5 justify-center items-center gap-5">
         <div className="w-[40px] h-auto">
-          <Image
-            src="/images/justibot-icon.png"
-            alt="Yashed"
-            width={50}
-            height={50}
-          />
+          <Image src="/images/user.png" alt="user" width={50} height={50} />
         </div>
         <div className="flex flex-col gap-2 w-full">
           <div className="text-[14px] font-semibold">You</div>

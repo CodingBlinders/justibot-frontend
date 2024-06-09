@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import ChatNavBar from "../components/chatNavBar";
 import Image from "next/image";
 import InputChat from "../components/inputChat";
+import BotResponse from "../components/botResponse";
 
 const Chat = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -10,7 +11,9 @@ const Chat = () => {
   const [isListening, setIsListening] = useState(false);
   const [placeholder, setPlaceholder] = useState("Message JustiBot...");
   const [micColor, setMicColor] = useState("#473F3B");
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<{ user: boolean; text: string }[]>(
+    []
+  );
   const [currentMessage, setCurrentMessage] = useState("");
   const [isLogoVisible, setIsLogoVisible] = useState(true);
 
@@ -25,9 +28,23 @@ const Chat = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (currentMessage.trim() !== "") {
-      setMessages((prevMessages) => [...prevMessages, currentMessage]);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { user: true, text: currentMessage },
+      ]);
       setCurrentMessage("");
       setIsLogoVisible(false);
+
+      // Simulate bot response
+      setTimeout(() => {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            user: false,
+            text: "Hello this is responce form justibot application.",
+          },
+        ]);
+      }, 1000);
     }
   };
 
@@ -109,10 +126,14 @@ const Chat = () => {
                 </button>
               )}
             </div>
-            <div className="flex flex-col gap-2 w-full mt-20 h-96 flex-grow overflow-y-auto custom-scrollbar">
+            <div className="flex flex-col gap-1 w-full mt-20 px-8 h-96 flex-grow overflow-y-auto custom-scrollbar">
               {messages.map((message, index) => (
                 <div key={index} className="w-full md:w-2/4 sm:w-3/4 mx-auto">
-                  <InputChat message={message} />
+                  {message.user ? (
+                    <InputChat message={message.text} />
+                  ) : (
+                    <BotResponse message={message.text} />
+                  )}
                 </div>
               ))}
             </div>
