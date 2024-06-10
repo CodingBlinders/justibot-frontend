@@ -41,9 +41,11 @@ const Chat = () => {
           ...prevMessages,
           {
             user: false,
-            text: "Hello this is responce form justibot application.",
+            text: "hello this is responce form justibot application.\nhello this is responce form justibot application.",
           },
+
         ]);
+        console.log(messages)
       }, 1000);
     }
   };
@@ -137,7 +139,7 @@ const Chat = () => {
                 </div>
               ))}
             </div>
-            <div className="flex items-center justify-center mb-4 px-4 w-full">
+            <div className="flex items-center justify-center mb-4 px-4 w-full sticky bottom-10">
               <div className="relative w-full md:w-2/4 sm:w-3/4 my-2">
                 <textarea
                   id="message"

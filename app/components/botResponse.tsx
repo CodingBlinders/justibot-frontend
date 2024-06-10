@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import TypeIt from "typeit-react";
 
 const BotResponse = ({ message }: { message: string }) => {
   const [displayedText, setDisplayedText] = useState("");
@@ -7,9 +8,9 @@ const BotResponse = ({ message }: { message: string }) => {
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
-      setDisplayedText((prev) => prev + message[index]);
+      setDisplayedText(message);
       index++;
-      if (index === message.length) {
+      if (index >= message.length) {
         clearInterval(interval);
       }
     }, 50); // Adjust the speed here
@@ -18,24 +19,34 @@ const BotResponse = ({ message }: { message: string }) => {
   }, [message]);
 
   return (
-    <div className="animate-fade-in">
-      <div className="flex flex-row py-5 justify-center items-center gap-5">
-        <div className="w-[40px] h-auto">
-          <Image
-            src="/images/justibot-icon.png"
-            alt="JustiBot"
-            width={50}
-            height={50}
-          />
-        </div>
-        <div className="flex flex-col gap-2 w-full">
-          <div className="text-[14px] font-semibold">JustiBot</div>
-          <div className="text-[14px] font-normal typewriter">
-            {displayedText}
+      <div className="animate-fade-in">
+        <div className="flex flex-row py-5 justify-center items-center gap-5">
+          <div className="w-[40px] h-auto">
+            <Image
+                src="/images/justibot-icon.png"
+                alt="JustiBot"
+                width={50}
+                height={50}
+            />
+          </div>
+          <div className="flex flex-col gap-2 w-full">
+            <div className="text-[14px] font-semibold">JustiBot</div>
+            <div className="text-[14px] font-normal typewriter">
+              <TypeIt
+                  options={{
+                    speed: 50, // Adjust the speed here
+                    afterComplete: (instance) => {
+                      instance.destroy(); // Stops the cursor
+                    }
+                  }}
+              >
+                {message}
+              </TypeIt>
+
+            </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
