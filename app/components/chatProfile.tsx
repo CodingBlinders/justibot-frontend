@@ -7,12 +7,7 @@ const ChatProfile = () => {
       <div className="mt-10 w-full ">
         <div className="flex flex-row gap-4 justify-center items-center">
           <div className="w-[40px] h-auto">
-            <Image
-              src="/images/justibot-icon.png"
-              alt="Yashed"
-              width={50}
-              height={50}
-            />
+            <Image src="/images/user.png" alt="Yashed" width={50} height={50} />
           </div>
           <div className="flex flex-col ">
             <div className="text-[14px]  font-semibold">Nethmi Liyanage</div>
