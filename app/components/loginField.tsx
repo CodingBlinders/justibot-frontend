@@ -6,6 +6,10 @@ import ThirdPartySignup from "./3rdpartySignup";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+// const baseUrl = process.env.SPRING_API_BASE_URL;
+const baseUrl = "http://api.codingblinders.com:8081";
+
+
 const LoginField = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +25,7 @@ const LoginField = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/login',
+      url: `${baseUrl}/login`,
       headers: { 
         'Content-Type': 'application/json',
         'jwtToken': Cookies.get('jwtToken')
@@ -47,7 +51,7 @@ const LoginField = () => {
   const handleGetRequest = async () => {
 
     try {
-      const response = axios.get('http://localhost:8080/user', {
+      const response = axios.get(`${baseUrl}/user`, {
         headers: {
             'Content-Type': 'application/json',
             'jwtToken': Cookies.get('jwtToken')
@@ -129,12 +133,12 @@ const LoginField = () => {
           </Link>
         </div>
       </form>
-      <button
+      {/* <button
         onClick={handleGetRequest}
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Send GET Request
-      </button>
+      </button> */}
     </div>
   );
 };

@@ -5,6 +5,10 @@ import Image from "next/image";
 import InputChat from "../components/inputChat";
 import BotResponse from "../components/botResponse";
 import axios from 'axios';
+import Cookies from 'js-cookie';
+
+// const baseUrl = process.env.SPRING_API_BASE_URL;
+const baseUrl = "http://api.codingblinders.com:8081"
 
 const Chat = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -37,11 +41,11 @@ const handleSubmit = async (e: React.FormEvent) => {
       { user: true, text: currentMessage },
     ]);
 
-    const messageToSend = currentMessage; // Store the message to send
-    setCurrentMessage(""); // Clear the current message input
+    const messageToSend = currentMessage;
+    setCurrentMessage("");
     setIsLogoVisible(false);
 
-    const url = `http://localhost:8080/api/sendMessage`; // Replace with your baseUrl
+    const url = `${baseUrl}/api/sendMessage`;
 
     const payload = chatId
       ? { chatId, message: messageToSend}
@@ -51,6 +55,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       const response = await axios.post(url, payload, {
         headers: {
           "Content-Type": "application/json",
+          'jwtToken': Cookies.get('jwtToken')
         },
         withCredentials: true
       });
