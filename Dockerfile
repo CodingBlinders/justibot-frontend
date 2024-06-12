@@ -1,29 +1,32 @@
-# Use the official Node.js 18 image as the base image
-FROM node:20-alpine
+# Stage 1: Build the Next.js application
+FROM node:18-alpine AS builder
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files to the working directory
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
 # Install dependencies
 RUN npm ci
 
-# Copy the rest of the application code to the working directory
+# Copy the rest of the application code
 COPY . .
 
 # Build the Next.js application
 RUN npm run build
 
-# Install a lightweight web server for serving static files
-RUN npm install -g serve
+# Stage 2: Serve the application with Nginx
+FROM nginx:alpine
 
-# Remove unnecessary files to keep the image clean
-RUN rm -rf src
+# Copy the built Next.js application from the previous stage
+COPY --from=builder /app/out /usr/share/nginx/html
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Copy Nginx configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Command to run the Next.js application in production mode
-CMD ["serve", "-s", "out"]
+# Expose the port Nginx will run on
+EXPOSE 80
+
+# Command to run Nginx
+CMD ["nginx", "-g", "daemon off;"]
