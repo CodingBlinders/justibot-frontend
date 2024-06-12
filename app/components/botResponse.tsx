@@ -32,16 +32,16 @@ const BotResponse = ({ message }: { message: string }) => {
           <div className="flex flex-col gap-2 w-full">
             <div className="text-[14px] font-semibold">JustiBot</div>
             <div className="text-[14px] font-normal typewriter">
-              <TypeIt
-                  options={{
-                    speed: 50, // Adjust the speed here
-                    afterComplete: (instance) => {
-                      instance.destroy(); // Stops the cursor
-                    }
-                  }}
-              >
-                {message}
-              </TypeIt>
+            <TypeIt
+              options={{
+                speed: 50, // Adjust the speed here
+                afterComplete: (instance: { destroy: () => void }) => {
+                  instance.destroy(); // Stops the cursor
+                }
+              }}
+            >
+              {message}
+            </TypeIt>
 
             </div>
           </div>
