@@ -1,5 +1,5 @@
 # Stage 1: Build the Next.js application
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the built Next.js application from the previous stage
-COPY --from=builder /app/out /usr/share/nginx/html
+COPY --from=builder /app/.next /usr/share/nginx/html
 
 # Copy Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
