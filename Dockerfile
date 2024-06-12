@@ -16,17 +16,5 @@ COPY . .
 # Build the Next.js application
 RUN npm run build
 
-# Stage 2: Serve the application with Nginx
-FROM nginx:alpine
-
-# Copy the built Next.js application from the previous stage
-COPY --from=builder /app/.next /usr/share/nginx/html
-
-# Copy Nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expose the port Nginx will run on
-EXPOSE 80
-
 # Command to run Nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm",  "start"]
