@@ -4,6 +4,7 @@ import ChatNavBar from "../components/chatNavBar";
 import Image from "next/image";
 import InputChat from "../components/inputChat";
 import BotResponse from "../components/botResponse";
+import axios from 'axios';
 
 const Chat = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -16,6 +17,7 @@ const Chat = () => {
   );
   const [currentMessage, setCurrentMessage] = useState("");
   const [isLogoVisible, setIsLogoVisible] = useState(true);
+  const [chatId, setChatId] = useState("");
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCurrentMessage(e.target.value);
@@ -25,30 +27,54 @@ const Chat = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (currentMessage.trim() !== "") {
+
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (currentMessage.trim() !== "") {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { user: true, text: currentMessage },
+    ]);
+
+    const messageToSend = currentMessage; // Store the message to send
+    setCurrentMessage(""); // Clear the current message input
+    setIsLogoVisible(false);
+
+    const url = `http://localhost:8080/api/sendMessage`; // Replace with your baseUrl
+
+    const payload = chatId
+      ? { chatId, message: messageToSend}
+      : { message: messageToSend};
+
+    try {
+      const response = await axios.post(url, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true
+      });
+
+      const data = response.data;
+
       setMessages((prevMessages) => [
         ...prevMessages,
-        { user: true, text: currentMessage },
+        { user: false, text: data.response },
       ]);
-      setCurrentMessage("");
-      setIsLogoVisible(false);
 
-      // Simulate bot response
-      setTimeout(() => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            user: false,
-            text: "hello this is responce form justibot application.\nhello this is responce form justibot application.",
-          },
-
-        ]);
-        console.log(messages)
-      }, 1000);
+      if (data.chatId) {
+        setChatId(data.chatId);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { user: false, text: "Error sending message. Please try again." },
+      ]);
     }
-  };
+  }
+};
+
 
   useEffect(() => {
     if (textareaRef.current) {

@@ -44,14 +44,6 @@ const LoginField = () => {
   };
 
   const handleGetRequest = async () => {
-    let config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: 'http://localhost:8080/user',
-      headers: { 
-        'jwtToken': `${Cookies.get('jwtToken')}`
-      }
-    };
 
     try {
       const response = axios.get('http://localhost:8080/user', {
