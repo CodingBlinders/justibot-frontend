@@ -23,17 +23,18 @@ const LoginField = () => {
       maxBodyLength: Infinity,
       url: 'http://localhost:8080/login',
       headers: { 
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'jwtToken': Cookies.get('jwtToken')
       },
       data: data
     };
 
     try {
       const response = await axios.request(config);
-      const { token } = response.data;
+      const { jwtToken } = response.data;
 
       // Save the token in cookies
-      Cookies.set('jwtToken', token, { expires: 7 });
+      Cookies.set('jwtToken', jwtToken, { expires: 7 });
 
       console.log("Login successful, token saved in cookies.");
       // Handle successful response (e.g., redirect, show success message, etc.)
@@ -49,6 +50,7 @@ const LoginField = () => {
       const response = axios.get('http://localhost:8080/user', {
         headers: {
             'Content-Type': 'application/json',
+            'jwtToken': Cookies.get('jwtToken')
         },
         withCredentials: true
     });
@@ -127,12 +129,12 @@ const LoginField = () => {
           </Link>
         </div>
       </form>
-      {/* <button
+      <button
         onClick={handleGetRequest}
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Send GET Request
-      </button> */}
+      </button>
     </div>
   );
 };
