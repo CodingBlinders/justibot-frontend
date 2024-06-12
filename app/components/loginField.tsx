@@ -124,7 +124,7 @@ const LoginField = () => {
           <ThirdPartySignup />
         </div>
         <div className="w-full text-gray-700 font-medium py-2 text-xs">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/signup"
             className="text-[#A36A32] text-semibold hover:text-[#B97C40]"
