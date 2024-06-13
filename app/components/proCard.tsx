@@ -10,7 +10,7 @@ const ProCard = () => {
         <div className="text-xs md:text-sm lg:text-base text-center">
           Unlock powerful features with our Pro upgrade today!
         </div>
-        <button className="bg-[rgba(179,179,179,0.3)] hover:bg-[#622F1D] text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline sm:text-xm md:text-sm lg:text-base">
+        <button className="bg-[rgba(179,179,179,0.3)] hover:bg-[#622F1D] text-white font-semibold py-1 px-4 rounded-lg focus:outline-none focus:shadow-outline sm:text-xm md:text-sm lg:text-base">
           Upgrade Now
         </button>
       </div>

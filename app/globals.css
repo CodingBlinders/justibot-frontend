@@ -49,3 +49,28 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:vertical {
     border-radius: 10px;
 }
+
+
+/* Animation for bot responce*/
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.typewriter {
+    white-space: pre-wrap;
+    /* Allows breaking text into multiple lines */
+    overflow: hidden;
+    display: inline-block;
+}

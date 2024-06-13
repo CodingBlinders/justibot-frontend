@@ -17,7 +17,7 @@ const ChatNavBar: React.FC<ChatNavBarProps> = ({ toggleSidebar }) => {
       transition={{ type: "spring", stiffness: 70 }}
       className=" w-full h-full"
     >
-      <div className="flex flex-col m-4 p-2 w-full ">
+      <div className="flex flex-col m-4 p-2 w-full h-full">
         <div className="flex flex-row w-full gap-2">
           <button
             onClick={toggleSidebar}
@@ -104,13 +104,13 @@ const ChatNavBar: React.FC<ChatNavBarProps> = ({ toggleSidebar }) => {
             </div>
             <div>Settings</div>
           </div>
-          <div className="mt-48 w-full">
-            <ProCard />
-          </div>
-          <div className="absolute bottom-0 mb-8">
-            <ChatProfile />
-          </div>
         </div>
+        <div className="h-full flex items-center">
+          <ProCard />
+        </div>
+      </div>
+      <div className="absolute bottom-0 mb-8">
+        <ChatProfile />
       </div>
     </motion.div>
   );
