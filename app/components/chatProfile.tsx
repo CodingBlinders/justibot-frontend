@@ -4,21 +4,14 @@ import Image from "next/image";
 const ChatProfile = () => {
   return (
     <>
-      <div className="mt-10 lg:w-72 md:w-56">
+      <div className="mt-10 w-full ">
         <div className="flex flex-row gap-4 justify-center items-center">
           <div className="w-[40px] h-auto">
-            <Image
-              src="/images/justibot-icon.png"
-              alt="Yashed"
-              width={50}
-              height={50}
-            />
+            <Image src="/images/user.png" alt="Yashed" width={50} height={50} />
           </div>
           <div className="flex flex-col ">
-            <div className="lg:text-[14px] md:text-[12px] sm:text-[10px] font-semibold">
-              Nethmi Liyanage
-            </div>
-            <div className="lg:text-[14px] md:text-[12px] sm:text-[10px] font-normal">
+            <div className="text-[14px]  font-semibold">Nethmi Liyanage</div>
+            <div className="text-[14px]  font-normal">
               nethmiliyanage@gmail.com
             </div>
           </div>
