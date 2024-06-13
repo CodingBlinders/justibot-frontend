@@ -18,6 +18,8 @@ const BotResponse = ({ message }: { message: string }) => {
     return () => clearInterval(interval);
   }, [message]);
 
+  console.log("BotResponse: ", message);
+
   return (
       <div className="animate-fade-in">
         <div className="flex flex-row py-5 justify-center items-center gap-5">

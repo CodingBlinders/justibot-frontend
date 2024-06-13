@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import LoginField from "../components/loginField";
 import SignupField from "../components/signupField";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Singup = () => {
   return (
@@ -24,6 +26,7 @@ const Singup = () => {
       <div className="col-span-3 lg:col-span-5 flex flex-col justify-center items-center bg-[#131211]">
         <SignupField />
       </div>
+      <ToastContainer />
     </div>
   );
 };
