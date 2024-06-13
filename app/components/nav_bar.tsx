@@ -16,7 +16,7 @@ function Nav_bar(){
                 </NavbarBrand>
                 <NavbarContent className="hidden sm:flex gap-[40px]" justify="end">
                     <NavbarItem>
-                        <Link color="foreground" href="#">
+                        <Link color="foreground" href="/">
                             Home
                         </Link>
                     </NavbarItem>
@@ -33,12 +33,12 @@ function Nav_bar(){
                 </NavbarContent>
                 <NavbarContent justify="end">
                     <NavbarItem>
-                        <Button as={Link}  href="#" variant="flat" className="text-customBrown border-customBrown border-2 font-bold"  >
+                        <Button as={Link}  href="/login" variant="flat" className="text-customBrown border-customBrown border-2 font-bold"  >
                             Login
                         </Button>
                     </NavbarItem>
                     <NavbarItem className="hidden lg:flex">
-                        <Button as={Link}  href="#" variant="solid" className="bg-white text-customBrown font-bold ">
+                        <Button as={Link}  href="/signup" variant="solid" className="bg-white text-customBrown font-bold ">
                             Sign Up
                         </Button>
                     </NavbarItem>
