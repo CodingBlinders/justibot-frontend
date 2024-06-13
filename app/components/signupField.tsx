@@ -1,10 +1,54 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import axios from 'axios';
 import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import ThirdPartySignup from "./3rdpartySignup";
 
 const SignupField = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    const data = JSON.stringify({
+      username: email,
+      password: password,
+    });
+
+    const config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:8080/register',
+      headers: { 
+        'Content-Type': 'application/json', 
+      },
+      data: data
+    };
+
+    try {
+      const response = await axios(config);
+      console.log(response.data);
+      toast.success("Signup successful");
+      // Handle successful signup (e.g., redirect to login page)
+    } catch (error) {
+      console.error(error);
+      toast.error("Signup failed");
+      // Handle error during signup
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
+      <ToastContainer />
       <div>
         <img
           src="/images/justibot-logo-1.png"
@@ -13,7 +57,7 @@ const SignupField = () => {
         />
       </div>
       <div className="text-xl font-semibold mb-6 text-left w-full">Signup</div>
-      <form className="w-[650px] max-w-[350px]">
+      <form className="w-[650px] max-w-[350px]" onSubmit={handleSignup}>
         <div className="mb-2">
           <label
             htmlFor="email"
@@ -24,7 +68,10 @@ const SignupField = () => {
           <input
             type="email"
             id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="mt-1 block w-full h-8 p-2 border-gray-300 rounded-md shadow-sm focus:border-[#A36A32] focus:ring text-black focus:ring-indigo-200 focus:ring-opacity-50 text-sm"
+            required
           />
         </div>
         <div className="mb-2">
@@ -37,24 +84,30 @@ const SignupField = () => {
           <input
             type="password"
             id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="mt-1 block w-full h-8 p-2 border-gray-300 rounded-md shadow-sm focus:border-[#A36A32] text-black focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-sm"
+            required
           />
         </div>
         <div className="mb-5">
           <label
-            htmlFor="password"
+            htmlFor="confirmPassword"
             className="block text-[12px] lg:text[15px] font-medium text-white"
           >
             Confirm Password
           </label>
           <input
             type="password"
-            id="password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="mt-1 block w-full h-8 p-2 border-gray-300 rounded-md shadow-sm focus:border-[#A36A32] text-black focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-sm"
+            required
           />
         </div>
         <div className=" w-full mb-6 flex justify-between">
-          <button className="w-full bg-[#A36A32] hover:bg-[#622F1D] text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline lg:text-sm">
+          <button type="submit" className="w-full bg-[#A36A32] hover:bg-[#622F1D] text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline lg:text-sm">
             Signup
           </button>
         </div>

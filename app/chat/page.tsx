@@ -8,7 +8,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 // const baseUrl = process.env.SPRING_API_BASE_URL;
-const baseUrl = "http://api.codingblinders.com:8081"
+const baseUrl = "http://localhost:8080"
 
 const Chat = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -31,6 +31,25 @@ const Chat = () => {
     }
   };
 
+  function detectLanguage(text : string) {
+
+    const sinhalaRegex = /[\u0D80-\u0DFF]/;
+    const englishRegex = /[A-Za-z]/;
+    const words = text.split(/\s+/);
+    const containsSinhala = (word: string) => sinhalaRegex.test(word);
+    const containsEnglish = (word: string) => englishRegex.test(word);
+  
+    for (let word of words) {
+      if (containsSinhala(word)) {
+        return '1';
+      }
+      if (containsEnglish(word)) {
+        return '2';
+      }
+    }
+    return '0';
+  }
+
 
 
 const handleSubmit = async (e: React.FormEvent) => {
@@ -44,8 +63,17 @@ const handleSubmit = async (e: React.FormEvent) => {
     const messageToSend = currentMessage;
     setCurrentMessage("");
     setIsLogoVisible(false);
+    const detectedLanguage = detectLanguage(messageToSend);
 
-    const url = `${baseUrl}/api/sendMessage`;
+    let url = '';
+
+    if(detectedLanguage === '1'){
+      url = `${baseUrl}/api/sendSinMessage`;
+    }
+    else{
+      url = `${baseUrl}/api/sendMessage`;
+    }
+    
 
     const payload = chatId
       ? { chatId, message: messageToSend}
@@ -60,7 +88,11 @@ const handleSubmit = async (e: React.FormEvent) => {
         withCredentials: true
       });
 
+      // const data = response.data;
       const data = response.data;
+
+      // print data.response type
+      console.log(typeof(data.response));
 
       setMessages((prevMessages) => [
         ...prevMessages,
