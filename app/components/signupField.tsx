@@ -4,12 +4,15 @@ import axios from 'axios';
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import ThirdPartySignup from "./3rdpartySignup";
+import ThirdPartySignup from "./3rdpartySignup"
+import { useRouter } from "next/navigation";;
 
 const SignupField = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const router = useRouter();
 
   const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,6 +41,7 @@ const SignupField = () => {
       const response = await axios(config);
       console.log(response.data);
       toast.success("Signup successful");
+        router.push("/chat");
       // Handle successful signup (e.g., redirect to login page)
     } catch (error) {
       console.error(error);
