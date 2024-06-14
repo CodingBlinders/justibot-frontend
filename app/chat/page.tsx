@@ -8,7 +8,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 // const baseUrl = process.env.SPRING_API_BASE_URL;
-const baseUrl = "http://localhost:8080"
+const baseUrl = "http://api.codingblinders.com:8081"
 
 const Chat = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
