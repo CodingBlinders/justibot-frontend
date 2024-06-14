@@ -27,7 +27,7 @@ const SignupField = () => {
     const config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8080/register',
+      url: 'http://api.codingblinders.com:8081/register',
       headers: { 
         'Content-Type': 'application/json', 
       },
