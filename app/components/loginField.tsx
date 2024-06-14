@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import ThirdPartySignup from "./3rdpartySignup";
 import axios from "axios";
 import Cookies from "js-cookie";
