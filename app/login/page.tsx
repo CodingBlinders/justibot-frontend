@@ -7,7 +7,7 @@ const Login = () => {
     <div className="grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
       <div
         className="col-span-7 lg:col-span-7 flex justify-center items-center bg-cover bg-center"
-        style={{ backgroundImage: 'url("/images/login-1.png")' }}
+        style={{ backgroundImage: 'url("/images/login.png")' }}
       >
         {/* <div className="w-full h-full">
           <Image
